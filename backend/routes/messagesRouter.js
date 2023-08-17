@@ -18,7 +18,7 @@ const router = express.Router();
 router.get('/', getMessages);
 
 //post a new message
-router.post('/', newMessage);
+router.post('/new', newMessage);
 
 //get a message by id
 router.get('/message/:id', getMessage);
