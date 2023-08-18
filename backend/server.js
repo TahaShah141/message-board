@@ -16,19 +16,19 @@ const app = express();
 app.use(express.json());
 
 //use auth router for /auth
-app.use('/auth', authRouter);
+app.use('/api/auth', authRouter);
 
 //check if authorized token is provided
 app.use(requireAuth)
 
 //default path being /messages
-app.get('/', (req, res) => res.redirect('/messages'));
+app.get('/', (req, res) => res.redirect('/api/messages'));
 
 //use messages router for /messages
-app.use('/messages', messagesRouter);
+app.use('/api/messages', messagesRouter);
 
 //use user router for /user
-app.use('/user', userRouter);
+app.use('/api/user', userRouter);
 
 
 //connect to db and start listening for HTTP requests
