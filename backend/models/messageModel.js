@@ -8,7 +8,8 @@ const Schema = mongoose.Schema;
 const MessageSchema = new Schema({
     sender_id: {
         type: mongoose.Types.ObjectId,
-        required: true
+        required: true,
+        index: true
     },
     title: {
         type: String,

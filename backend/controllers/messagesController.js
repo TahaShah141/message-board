@@ -6,7 +6,9 @@ const Message = require('../models/messageModel');
 
 //create a new message and insert into db
 const newMessage = async (req, res) => {
-    const {sender_id, title, content} = req.body;
+
+    const sender_id = req.user._id;
+    const { title, content } = req.body;
 
     try {
         const message = await Message.create({sender_id, title, content});
@@ -18,7 +20,7 @@ const newMessage = async (req, res) => {
 }
 
 //get all messages
-const getMessages = async (req, res) => {
+const getAllMessages = async (req, res) => {
     const allMessages = await Message.find({}).sort({createdAt: -1});
     
     res.status(200).json(allMessages);
@@ -30,15 +32,13 @@ const getMessage = async (req, res) => {
     const { messageID } = req.params;
 
     if (!mongoose.isValidObjectId(messageID)) {
-        res.status(400).json({errorMessage: "Invalid ID"});
-        return;
+        return res.status(400).json({errorMessage: "Invalid ID"});
     }
 
     const message = Message.findById(messageID);
 
     if (!mongoose.isValidObjectId(messageID)) {
-        res.status(404).json({errorMessage: "No such message exists"});
-        return;
+        return res.status(404).json({errorMessage: "No such message exists"});
     }
 
     res.status(200).json(message);
@@ -50,15 +50,13 @@ const deleteMessage = async (req, res) => {
     const { messageID } = req.params;
 
     if (!mongoose.isValidObjectId(messageID)) {
-        res.status(400).json({errorMessage: "Invalid ID"});
-        return;
+        return res.status(400).json({errorMessage: "Invalid ID"});
     }
 
     const message = Message.findByIdAndDelete(messageID);
 
     if (!mongoose.isValidObjectId(messageID)) {
-        res.status(404).json({errorMessage: "No such message exists"});
-        return;
+        return res.status(404).json({errorMessage: "No such message exists"});
     }
 
     res.status(200).json(message);
@@ -70,8 +68,7 @@ const updateMessage = async (req, res) => {
     const { messageID } = req.params;
 
     if (!mongoose.isValidObjectId(messageID)) {
-        res.status(400).json({errorMessage: "Invalid ID"});
-        return;
+        return res.status(400).json({errorMessage: "Invalid ID"});
     }
 
     const message = Message.findByIdAndUpdate(messageID, {
@@ -79,8 +76,7 @@ const updateMessage = async (req, res) => {
     });
 
     if (!mongoose.isValidObjectId(messageID)) {
-        res.status(404).json({errorMessage: "No such message exists"});
-        return;
+        return res.status(404).json({errorMessage: "No such message exists"});
     }
 
     res.status(200).json(message);
@@ -88,7 +84,7 @@ const updateMessage = async (req, res) => {
 
 
 module.exports = {
-    getMessages,
+    getAllMessages,
     getMessage,
     newMessage,
     deleteMessage, 

@@ -4,7 +4,7 @@ const express = require("express");
 
 //controller functions for messages api
 const {
-    getMessages,
+    getAllMessages,
     getMessage,
     newMessage,
     deleteMessage, 
@@ -15,7 +15,7 @@ const {
 const router = express.Router();
 
 //get all messages
-router.get('/', getMessages);
+router.get('/', getAllMessages);
 
 //post a new message
 router.post('/new', newMessage);
