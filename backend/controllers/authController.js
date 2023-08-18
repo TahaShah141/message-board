@@ -22,13 +22,12 @@ const loginUser = async (req, res) => {
         res.status(200).json({username, token});
     }
     catch (err) {
-        res.status(400).json({errorMessage: err.message})
+        res.status(400).json({error: err.message})
     }
 }
 
 //tries to sign up a new user
 const signupUser = async (req, res) => {
-
     const { username, email, password } = req.body
 
     try {
@@ -39,7 +38,7 @@ const signupUser = async (req, res) => {
         res.status(200).json({username, token});
     } 
     catch (err) {
-        res.status(400).json({errorMessage: err.message})
+        res.status(400).json({error: err.message})
     }
 }
 

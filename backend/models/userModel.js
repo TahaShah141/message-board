@@ -73,19 +73,21 @@ UserSchema.statics.signup = async function(username, email, password) {
 }
 
 
-UserSchema.statics.login() = async function(credentials, password) {
+UserSchema.statics.login = async function(credentials, password) {
     
     //checks if all fields filled
     if (!credentials || !password) {
         throw Error("All fields must be filled")
     }
-    
+
+    let user;
+
     //checks if valid email entered
     if (validator.isEmail(credentials)) {
-        const user = await this.findOne({email: credentials})
+        user = await this.findOne({email: credentials})
     }
     else { //else checks if valid username entered
-        const user = await this.findOne({username: credentials})
+        user = await this.findOne({username: credentials})
     }
 
     //checks if user found

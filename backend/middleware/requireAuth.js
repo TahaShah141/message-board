@@ -21,13 +21,13 @@ const requireAuth = async (req, res, next) => {
          const { _id } = jwt.verify(token, process.env.SECRET)
 
          req.user = await User.findOne({ _id }).select('_id')
+
+         //to carry on with the request
+         next()
     } 
     catch (err) {
-        res.status(401).json({error: "Request is not authorized"})
+        return res.status(401).json({error: err})
     }
-
-    //to carry on with the request
-    next()
 }
 
 module.exports = requireAuth
