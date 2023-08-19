@@ -4,11 +4,15 @@ import Navbar from "../Components/Navbar";
 export default function RootLayout() {
   return (
     <>
-    <nav>
-        <Navbar />
-    </nav>
+    <header>
+      <nav>
+          <Navbar />
+      </nav>
+    </header>
 
-    <Outlet />
+    <main>
+      <Outlet />
+    </main>
     </>
   )
 }

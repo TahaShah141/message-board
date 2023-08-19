@@ -27,12 +27,16 @@ export const useSignup = () => {
         if (!res.ok) {
             setLoading(false)
             setError(json.error)
+
+            return false
         }
         else {
             localStorage.setItem('user', JSON.stringify(json))
             dispatch({type: 'LOGIN', payload: json})
 
             setLoading(false)
+
+            return true
         }
 
     }

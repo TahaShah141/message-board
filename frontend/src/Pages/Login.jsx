@@ -1,8 +1,11 @@
+import { useNavigate } from 'react-router-dom'
+import { useAuthContext } from '../Hooks/useAuthContext'
 import { useLogin } from '../Hooks/useLogin'
 import { useState } from 'react'
 
 export default function Login() {
 
+  const navigate = useNavigate()
   const { login, isLoading, error } = useLogin()
 
   const [credentials, setCredentials] = useState("")
@@ -14,15 +17,20 @@ export default function Login() {
     setCredentials("")
     setPassword("")
 
-    await login(credentials, password)
+    const loggedIn = await login(credentials, password)
+
+    if (loggedIn) navigate('/home')
   }
 
   return (
-    <form method="POST" onSubmit={handleSubmit} autoComplete='off'>
-        <input type="text" name="credentials" value={credentials} onChange={(e) => setCredentials(e.target.value)}/>
-        <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-        <button type="submit" disabled={isLoading} >Login</button>
-        {error && <div className="error">{error}</div>}
-    </form>
+    <div className='flex flex-col items-center p-5 gap-5'>
+      <h2 className='font-semibold text-xl bg-primary py-3 px-5 text-white rounded-xl shadow-sm shadow-gray-600'>Login Form</h2>
+      <form className='auth-form' method="POST" onSubmit={handleSubmit} autoComplete='off'>
+          <input className='text-input' type="text" name="credentials" value={credentials} onChange={(e) => setCredentials(e.target.value)} placeholder='Usrename/Email'/>
+          <input className='text-input' type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='password'/>
+          <button className="auth-button" type="submit" disabled={isLoading} >Login</button>
+          {error && <div className="error">{error}</div>}
+      </form>
+    </div>
   )
 }
