@@ -12,7 +12,7 @@ export default function Navbar() {
         <NavLink className="nav-link" to="/home">Home</NavLink>
         <NavLink className="nav-link" to="/messages">Messages</NavLink>
         <NavLink className="nav-link" to="/profile">Profile</NavLink>
-        <button className="nav-link" onClick={() => dispatch({type: 'LOGOUT'})}>Log Out</button>
+        <button className="font-mono border-2 border-white p-2 text-sm rounded-md bg-neutral-700 hover:scale-110 hover:font-bold hover:border-black hover:bg-red-500" onClick={() => dispatch({type: 'LOGOUT'})}>Log Out</button>
         </div>)}
 
         {!user && (<div className="flex gap-4 text-lg md:gap-9 md:text-xl">

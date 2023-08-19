@@ -15,11 +15,11 @@
 }
 
 .nav-link {
-    @apply font-mono hover:text-red-500 hover:border-b-2 border-red-500 py-1
+    @apply font-mono hover:text-red-500 hover:border-b-2 border-red-500 py-1 hover:scale-105
 }
 
 .nav-link.active {
-    @apply border-b-2 border-white
+    @apply border-b-2 border-white hover:border-red-500
 }
 
 .text-input {

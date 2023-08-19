@@ -27,7 +27,7 @@ export default function Login() {
       <h2 className='font-semibold text-xl bg-primary py-3 px-5 text-white rounded-xl shadow-sm shadow-gray-600'>Login Form</h2>
       <form className='auth-form' method="POST" onSubmit={handleSubmit} autoComplete='off'>
           <input className='text-input' type="text" name="credentials" value={credentials} onChange={(e) => setCredentials(e.target.value)} placeholder='Usrename/Email'/>
-          <input className='text-input' type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='password'/>
+          <input className='text-input' type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password'/>
           <button className="auth-button" type="submit" disabled={isLoading} >Login</button>
           {error && <div className="error">{error}</div>}
       </form>
