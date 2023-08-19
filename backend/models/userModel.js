@@ -39,12 +39,7 @@ UserSchema.statics.signup = async function(username, email, password) {
     if (!validator.isEmail(email)) {
         throw Error ("Please Enter a Valid Email");
     }
-
-    //checks if raw password strong enough
-    if (!validator.isStrongPassword(password)){
-        throw Error ("Password not strong enough");
-    }
-
+    
     //checks if the email already exists
     const existsEmail = await this.findOne({ email });
     
@@ -54,14 +49,19 @@ UserSchema.statics.signup = async function(username, email, password) {
     
     //checks if the username already exists
     const existsUsername = await this.findOne({ username });
-
+    
     if (existsUsername) {
         throw Error("Username already in use");
+    }
+    
+    //checks if raw password strong enough
+    if (!validator.isStrongPassword(password)){
+        throw Error ("Password not strong enough");
     }
 
     //add extra protection to the password so even same passwords are stored differently
     const salt = await bcrypt.genSalt(10);
-
+    
     //encrypts the password
     const hash = await bcrypt.hash(password, salt);
 

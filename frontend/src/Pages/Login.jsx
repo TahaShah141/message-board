@@ -1,37 +1,28 @@
-import { Form, redirect } from "react-router-dom";
+import { useLogin } from '../Hooks/useLogin'
+import { useState } from 'react'
 
 export default function Login() {
+
+  const { login, isLoading, error } = useLogin()
+
+  const [credentials, setCredentials] = useState("")
+  const [password, setPassword] = useState("")
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setCredentials("")
+    setPassword("")
+
+    await login(credentials, password)
+  }
+
   return (
-    <Form method="POST" action="/login">
-        <input type="text" name="credentials"/>
-        <input type="password" name="password"/>
-        <button type="submit">Login</button>
-    </Form>
+    <form method="POST" onSubmit={handleSubmit} autoComplete='off'>
+        <input type="text" name="credentials" value={credentials} onChange={(e) => setCredentials(e.target.value)}/>
+        <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+        <button type="submit" disabled={isLoading} >Login</button>
+        {error && <div className="error">{error}</div>}
+    </form>
   )
-}
-
-export const loginUser = async ({ request }) => {
-    
-    // const data = await request.formData();
-
-    // const {credentials, password} = {
-    //     credentials: data.get('credentials'),
-    //     password: data.get('password')
-    // }
-
-    // console.log(credentials, password);
-
-    // const res = await fetch('/api/auth/login', {
-    //     method:"POST",
-    //     headers: {'Content-Type': 'application/json'},
-    //     body: JSON.stringify({credentials, password})
-    // });
-
-    // console.log(res);
-
-    // const json = await res.json();
-
-    // console.log(json);
-
-    return redirect('/login')
 }

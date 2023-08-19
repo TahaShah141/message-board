@@ -12,13 +12,14 @@ import RootLayout from './Layouts/RootLayout';
 
 //pages
 import SignUp from './Pages/SignUp';
-import Login, { loginUser } from './Pages/Login';
+import Login from './Pages/Login';
+import { AuthContextProvider } from './Contexts/authContext';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />} >
       <Route path='signup' element={<SignUp />} />
-      <Route path='login' element={<Login />} action={loginUser}/>
+      <Route path='login' element={<Login />}/>
     </Route>
   )
 )
@@ -28,7 +29,9 @@ function App() {
 
   return (
     <>
-    <RouterProvider router={router} />
+    <AuthContextProvider>
+      <RouterProvider router={router} />
+    </AuthContextProvider>
     </>
   )
 }
