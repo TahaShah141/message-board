@@ -8,19 +8,20 @@ import {
 
 //layouts
 import RootLayout from './Layouts/RootLayout';
+import Authenticator from './Components/Authenticator';
+import Authentication from './Components/Authentication';
 
 //pages
 import SignUp from './Pages/SignUp';
 import Login from './Pages/Login';
-import Authenticator from './Components/Authenticator';
-import Authentication from './Components/Authentication';
+import Home from './Pages/Home';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />} >
 
       <Route element={<Authenticator />} >
-        <Route index element={<p>This is the home page</p>} />
+        <Route index element={<Home />} />
         <Route path='messages' element={<p>This is the messages page</p>} />
         <Route path='profile' element={<p>This is the profile page</p>} />
       </Route>

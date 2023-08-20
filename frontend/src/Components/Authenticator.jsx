@@ -1,5 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom"
 import { useAuthContext } from "../Hooks/useAuthContext"
+import { APIContextProvider } from "../Contexts/apiContext"
+
 
 export default function Authenticator() {
 
@@ -7,7 +9,11 @@ export default function Authenticator() {
 
     return (
         <>
-            {user ? <Outlet /> : <Navigate to='login' />}
+            {user ?
+            <APIContextProvider>
+            <Outlet />
+            </APIContextProvider> :
+            <Navigate to='login' />}
         </>
     )
 }
