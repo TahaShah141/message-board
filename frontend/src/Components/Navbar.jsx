@@ -3,7 +3,7 @@ import { useAuthContext } from "../Hooks/useAuthContext";
 
 export default function Navbar() {
 
-  const { user, dispatch} = useAuthContext()
+  const { user, dispatch } = useAuthContext()
 
   return (
     <div className="flex justify-between items-center p-5 bg-primary text-white md:px-10">

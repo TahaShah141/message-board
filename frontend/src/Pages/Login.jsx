@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom'
-import { useAuthContext } from '../Hooks/useAuthContext'
 import { useLogin } from '../Hooks/useLogin'
 import { useState } from 'react'
 
@@ -19,7 +18,7 @@ export default function Login() {
 
     const loggedIn = await login(credentials, password)
 
-    if (loggedIn) navigate('/home')
+    if (loggedIn) navigate('/')
   }
 
   return (

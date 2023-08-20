@@ -19,6 +19,8 @@ export const AuthContextProvider = ({ children }) => {
         user:null
     })
 
+    // console.log("State Changed: ", state.user)
+
     useEffect(() => {
         dispatch({type: 'LOGIN', payload: localStorage.getItem('user')})
     }, [])
