@@ -11,6 +11,11 @@ const MessageSchema = new Schema({
         required: true,
         index: true
     },
+    username: {
+        type: String,
+        required: true,
+        index: true
+    },
     title: {
         type: String,
         required: true

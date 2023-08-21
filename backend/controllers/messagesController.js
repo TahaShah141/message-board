@@ -8,10 +8,11 @@ const Message = require('../models/messageModel');
 const newMessage = async (req, res) => {
 
     const sender_id = req.user._id;
+    const username = req.user.username
     const { title, content } = req.body;
 
     try {
-        const message = await Message.create({sender_id, title, content});
+        const message = await Message.create({sender_id, username, title, content});
         res.status(200).json(message);
     }
     catch (err) {
