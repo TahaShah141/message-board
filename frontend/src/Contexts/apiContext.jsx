@@ -1,26 +1,26 @@
 import { createContext, useEffect, useReducer } from "react";
+import { useAuthContext } from "../Hooks/useAuthContext";
 
 export const APIContext = createContext()
 
 export const apiReducer = (state, action) => {
     switch (action.type) {
         case 'SET_MESSAGES':
-            return { messages : action.payload, ...state}
+            return {...state, messages : action.payload}
         case 'NEW_MESSAGE':
-            return { messages: [action.payload, ...messages], ...state}
+            return {...state, messages: [action.payload, ...(state.messages)]}
         case 'DELETE_MESSAGE':
-            return {message: messages.filter(msg => msg._id !== action.payload._id), ...state}
+            return {...state, messages: state.messages.filter(msg => msg._id !== action.payload._id)}
         case 'EDIT_MESSAGE':
-            return {messages: 
-                messages.map((msg) => {
+            return {...state,
+                messages: state.messages.map((msg) => {
                     if (msg._id === action.payload._id)
-                        return action.payload
+                        return {...msg, ...action.payload}
                     else return msg
-                    }),
-                ...state
+                    })
             }
-        case 'USERNAME':
-            return { username: action.payload, ...state }
+        case 'SET_USERNAME':
+            return {...state, username: action.payload}
         
         default:
             return state
@@ -33,10 +33,35 @@ export const APIContextProvider = ({ children }) => {
         username: null
     })
 
-    // useEffect(() => {
-    //     dispatch({type: 'LOGIN', payload: localStorage.getItem('user')})
-    // }, [])
+    const { user, dispatch: userDispatch } = useAuthContext()
 
+    useEffect(() => { 
+        const getMessages = async () => {
+            console.log(user)
+            console.log(user.username)
+
+            const res = await fetch('/api/messages', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+
+            const json = await res.json()
+
+            if (!res.ok) {
+                userDispatch({type: 'LOGOUT'})
+            }
+            else {
+                dispatch({type: 'SET_MESSAGES', payload: json})
+            }
+        }
+
+        if (user) {
+            getMessages()
+        }
+    }, [user])
+
+    console.log(state)
     return (
         <APIContext.Provider value={{ ...state, dispatch }}>
             { children }
