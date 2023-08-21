@@ -35,31 +35,31 @@ export const APIContextProvider = ({ children }) => {
 
     const { user, dispatch: userDispatch } = useAuthContext()
 
-    useEffect(() => { 
-        const getMessages = async () => {
-            console.log(user)
-            console.log(user.username)
+    // useEffect(() => { 
+    //     const getMessages = async () => {
+    //         console.log(user)
+    //         console.log(user.username)
 
-            const res = await fetch('/api/messages', {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
+    //         const res = await fetch('/api/messages', {
+    //             headers: {
+    //                 'Authorization': `Bearer ${user.token}`
+    //             }
+    //         })
 
-            const json = await res.json()
+    //         const json = await res.json()
 
-            if (!res.ok) {
-                userDispatch({type: 'LOGOUT'})
-            }
-            else {
-                dispatch({type: 'SET_MESSAGES', payload: json})
-            }
-        }
+    //         if (!res.ok) {
+    //             userDispatch({type: 'LOGOUT'})
+    //         }
+    //         else {
+    //             dispatch({type: 'SET_MESSAGES', payload: json})
+    //         }
+    //     }
 
-        if (user) {
-            getMessages()
-        }
-    }, [user])
+    //     if (user) {
+    //         getMessages()
+    //     }
+    // }, [user])
 
     console.log(state)
     return (

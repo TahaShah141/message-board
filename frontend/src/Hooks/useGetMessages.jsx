@@ -1,0 +1,34 @@
+import { useState } from "react"
+import { useAuthContext } from "./useAuthContext"
+import { useAPIContext } from "./useAPIContext"
+
+export const useGetMessages = () => {
+
+    const [error, setError] = useState(null)
+    const [isLoading, setLoading] = useState(false)
+    const { dispatch } = useAPIContext()
+    const { user, dispatch: userDispatch } = useAuthContext()
+
+    const getMessages = async (id) => {
+        setLoading(true)
+        setError(null)
+
+        const res = await fetch(`/api/messages/${id ? id : ''}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}` 
+            }
+        })
+
+        const json = await res.json()
+
+        if (!res.ok) {
+            userDispatch({type: 'LOGOUT'})
+        }
+        else {
+            dispatch({type: 'SET_MESSAGES', payload: json})
+            setLoading(false)
+        }
+    }
+    return { getMessages, isLoading, error }
+} 

@@ -23,7 +23,7 @@ export default function Login() {
 
   return (
     <div className='flex flex-col items-center p-5 gap-5'>
-      <h2 className='font-semibold text-xl bg-primary py-3 px-5 text-white rounded-xl shadow-sm shadow-gray-600'>Login Form</h2>
+      <h2 className='font-semibold text-xl bg-primary py-3 px-5 text-white rounded-xl shadow shadow-red-400'>Login Form</h2>
       <form className='auth-form' method="POST" onSubmit={handleSubmit} autoComplete='off'>
           <input className='text-input' type="text" name="credentials" value={credentials} onChange={(e) => setCredentials(e.target.value)} placeholder='Usrename/Email'/>
           <input className='text-input' type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password'/>
