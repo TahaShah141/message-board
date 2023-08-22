@@ -1,11 +1,8 @@
-import { useNavigate } from 'react-router-dom'
-import { useLogin } from '../Hooks/useLogin'
 import { useState } from 'react'
 import { useNewMessage } from '../Hooks/useNewMessage'
 
 export default function NewMessage({ closeMessage }) {
 
-    const navigate = useNavigate()
     const { newMessage, isLoading, error } = useNewMessage()
 
     const [title, setTitle] = useState("")

@@ -26,12 +26,17 @@ export const useGetMessages = () => {
         const json = await res.json()
 
         if (!res.ok) {
-            userDispatch({type: 'LOGOUT'})
+            if (res.status === 401) {
+                userDispatch({type: 'LOGOUT'})
+                return
+            }
+
+            setError(json.error)
         }
         else {
             dispatch({type: 'SET_MESSAGES', payload: json})
-            setLoading(false)
         }
+        setLoading(false)
     }
     return { getMessages, isLoading, error }
 } 

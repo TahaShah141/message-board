@@ -31,13 +31,18 @@ export const useNewMessage = () => {
         const json = await res.json()
 
         if (!res.ok) {
-            userDispatch({type: 'LOGOUT'})
-            return false
+            console.logr(res.status)
+            console.log(json)
+            if (res.status === 401) {
+                userDispatch({type: 'LOGOUT'})
+                return false
+            }
+            setError(json.error)
+            setLoading(false)
         }
         else {
             dispatch({type: 'NEW_MESSAGE', payload: json})
             setLoading(false)
-
             return true
         }
     }
