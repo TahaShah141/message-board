@@ -4,7 +4,7 @@ import Navbar from "../Components/Navbar";
 export default function RootLayout() {
   return (
     <>
-    <header>
+    <header className="sticky top-0">
       <nav>
           <Navbar />
       </nav>
