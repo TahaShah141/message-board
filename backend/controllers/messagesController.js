@@ -16,7 +16,7 @@ const newMessage = async (req, res) => {
         res.status(200).json(message);
     }
     catch (err) {
-        res.status(400).json({errorMessage: "Failed to create a new Message"})
+        res.status(400).json({error: "Failed to create a new Message. Please Fill all fields correctly"})
     }
 }
 
@@ -33,13 +33,13 @@ const getMessage = async (req, res) => {
     const { messageID } = req.params;
 
     if (!mongoose.isValidObjectId(messageID)) {
-        return res.status(400).json({errorMessage: "Invalid ID"});
+        return res.status(400).json({error: "Invalid ID"});
     }
 
     const message = Message.findById(messageID);
 
     if (!mongoose.isValidObjectId(messageID)) {
-        return res.status(404).json({errorMessage: "No such message exists"});
+        return res.status(404).json({error: "No such message exists"});
     }
 
     res.status(200).json(message);
@@ -51,13 +51,13 @@ const deleteMessage = async (req, res) => {
     const { messageID } = req.params;
 
     if (!mongoose.isValidObjectId(messageID)) {
-        return res.status(400).json({errorMessage: "Invalid ID"});
+        return res.status(400).json({error: "Invalid ID"});
     }
 
     const message = Message.findByIdAndDelete(messageID);
 
     if (!mongoose.isValidObjectId(messageID)) {
-        return res.status(404).json({errorMessage: "No such message exists"});
+        return res.status(404).json({error: "No such message exists"});
     }
 
     res.status(200).json(message);
@@ -69,7 +69,7 @@ const updateMessage = async (req, res) => {
     const { messageID } = req.params;
 
     if (!mongoose.isValidObjectId(messageID)) {
-        return res.status(400).json({errorMessage: "Invalid ID"});
+        return res.status(400).json({error: "Invalid ID"});
     }
 
     const message = Message.findByIdAndUpdate(messageID, {
@@ -77,7 +77,7 @@ const updateMessage = async (req, res) => {
     });
 
     if (!mongoose.isValidObjectId(messageID)) {
-        return res.status(404).json({errorMessage: "No such message exists"});
+        return res.status(404).json({error: "No such message exists"});
     }
 
     res.status(200).json(message);

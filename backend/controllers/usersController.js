@@ -8,13 +8,13 @@ const getUser = async (req, res) => {
     const { userID } = req.params;
 
     if (!mongoose.isValidObjectId(userID)) {
-        return res.status(400).json({errorMessage: "Invalid ID"});
+        return res.status(400).json({error: "Invalid ID"});
     }
 
     const user = User.findById(userID);
 
     if (!mongoose.isValidObjectId(userID)) {
-        return res.status(404).json({errorMessage: "No such user exists"});
+        return res.status(404).json({error: "No such user exists"});
     }
 
     res.status(200).json(user);
@@ -26,13 +26,13 @@ const deleteUser = async (req, res) => {
     const { userID } = req.params;
 
     if (!mongoose.isValidObjectId(userID)) {
-        return res.status(400).json({errorMessage: "Invalid ID"});
+        return res.status(400).json({error: "Invalid ID"});
     }
 
     const user = User.findByIdAndDelete(userID);
 
     if (!mongoose.isValidObjectId(userID)) {
-        return res.status(404).json({errorMessage: "No such user exists"});
+        return res.status(404).json({error: "No such user exists"});
     }
 
     res.status(200).json(user);
@@ -44,7 +44,7 @@ const updateUser = async (req, res) => {
     const { userID } = req.params;
 
     if (!mongoose.isValidObjectId(userID)) {
-        return res.status(400).json({errorMessage: "Invalid ID"});
+        return res.status(400).json({error: "Invalid ID"});
     }
 
     const user = User.findByIdAndUpdate(userID, {
@@ -52,7 +52,7 @@ const updateUser = async (req, res) => {
     });
 
     if (!mongoose.isValidObjectId(userID)) {
-        return res.status(404).json({errorMessage: "No such user exists"});
+        return res.status(404).json({error: "No such user exists"});
     }
 
     res.status(200).json(user);
