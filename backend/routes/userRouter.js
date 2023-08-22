@@ -1,4 +1,4 @@
-// -> FILE THAT HANDLES ALL THE ROUTES STARTING WITH '/users'
+// -> FILE THAT HANDLES ALL THE ROUTES STARTING WITH '/user'
 
 const express = require("express");
 
@@ -6,7 +6,8 @@ const express = require("express");
 const {
     getUser,
     deleteUser,
-    updateUser
+    updateUser,
+    getUserMessages
 } = require("../controllers/usersController");
 
 //initializing the router
@@ -14,6 +15,9 @@ const router = express.Router();
 
 //get a user by id
 router.get('/:id', getUser);
+
+//get a user's messages by his id
+router.get('/:id/messages', getUserMessages);
 
 //delete a user by id
 router.delete('/:id', deleteUser);
