@@ -31,7 +31,7 @@ export const useNewMessage = () => {
         const json = await res.json()
 
         if (!res.ok) {
-            console.logr(res.status)
+            console.log(res.status)
             console.log(json)
             if (res.status === 401) {
                 userDispatch({type: 'LOGOUT'})
