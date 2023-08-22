@@ -10,7 +10,7 @@ export default function RootLayout() {
       </nav>
     </header>
 
-    <main>
+    <main className="p-10">
       <Outlet />
     </main>
     </>
