@@ -10,8 +10,11 @@ export const useGetMessages = () => {
     const { user, dispatch: userDispatch } = useAuthContext()
 
     const getMessages = async (id) => {
+
         setLoading(true)
         setError(null)
+
+        if (!user) return
 
         const res = await fetch(`/api/messages/${id ? id : ''}`, {
             headers: {

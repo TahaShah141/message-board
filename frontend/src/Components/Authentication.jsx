@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom"
 import { useAuthContext } from "../Hooks/useAuthContext"
 
-export default function Authenticator() {
+export default function Authentication() {
 
     const { user } = useAuthContext()
 

@@ -1,19 +1,24 @@
+import { useEffect } from "react"
+import { useAPIContext } from "../Hooks/useAPIContext"
 import { useGetMessages } from "../Hooks/useGetMessages"
+import { MessageList } from "../Components/MessageList"
 
 export default function Home() {
 
-    const { getMessages, error } = useGetMessages()
+    const { getMessages, error, isLoading } = useGetMessages()
 
+    const { messages } = useAPIContext()
+
+    useEffect(() => {
+        getMessages()
+    }, [])
+    
     return (
     <>
-    <div className="flex gap-4 m-3">
-        {/* <button className="bg-neutral-700 text-white p-2 rounded-md shadow-black shadow-sm" onClick={() => dispatch({type: 'SET_USERNAME', payload: 'TahaShah141'})}>Set Username</button>
-        <button className="bg-neutral-700 text-white p-2 rounded-md shadow-black shadow-sm" onClick={() => dispatch({type: 'NEW_MESSAGE', payload: {dummyData: "dummy", _id: 876, message: 'test876'}})}>New Message</button> */}
-        <button className="bg-neutral-700 text-white p-2 rounded-md shadow-black shadow-sm" onClick={() => getMessages()}>Get Messages</button>
-        {error && <p>{error.name}</p>}
-        {/* <button className="bg-neutral-700 text-white p-2 rounded-md shadow-black shadow-sm" onClick={() => dispatch({type: 'DELETE_MESSAGE', payload: {dummyData: "dummy", _id: 123, message: 'test876'}})}>Delete Message</button>
-        <button className="bg-neutral-700 text-white p-2 rounded-md shadow-black shadow-sm" onClick={() => dispatch({type: 'EDIT_MESSAGE', payload: {dummyData: "dummy", _id: 456, message: 'changed'}})}>Edit Message</button> */}
+    <div className=" m-10 bg-neutral-800 rounded-xl border border-black">
+        {error && <p className="error">{error.message}</p>}
+        {isLoading && <p className=" text-center p-4 text-3xl text-white font-mono font-bold animate-pulse">Loading...</p>}
+        {!isLoading && <MessageList messages={messages} />}
     </div>
-    </>
-    )
+    </>)
 }
