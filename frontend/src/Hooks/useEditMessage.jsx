@@ -2,14 +2,14 @@ import { useState } from "react"
 import { useAuthContext } from "./useAuthContext"
 import { useAPIContext } from "./useAPIContext"
 
-export const useDeleteMessage = () => {
+export const useEditMessage = () => {
 
     const [error, setError] = useState(null)
     const [isLoading, setLoading] = useState(false)
     const { dispatch } = useAPIContext()
     const { user, dispatch: userDispatch } = useAuthContext()
 
-    const deleteMessage = async (id) => {
+    const editMessage = async (id, message) => {
 
         setLoading(true)
         setError(null)
@@ -17,11 +17,14 @@ export const useDeleteMessage = () => {
         if (!user) return
 
         const res = await fetch(`/api/messages/message/${id}`, {
-            method: "DELETE",
+            method: "PATCH",
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${user.token}` 
-            }
+            },
+            body: JSON.stringify({
+                ...message
+            })
         })
 
         const json = await res.json()
@@ -35,9 +38,9 @@ export const useDeleteMessage = () => {
             setError(json.error)
         }
         else {
-            dispatch({type: 'DELETE_MESSAGE', payload: json})
+            dispatch({type: 'EDIT_MESSAGE', payload: json})
         }
         setLoading(false)
     }
-    return { deleteMessage, isLoading, error }
+    return { editMessage, isLoading, error }
 } 

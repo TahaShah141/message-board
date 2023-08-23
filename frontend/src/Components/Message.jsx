@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDeleteMessage } from '../Hooks/useDeleteMessage'
+import { useEditMessage } from '../Hooks/useEditMessage'
 
 export const Message = ({ message, editable=false, userSpecific=false }) => {
 
@@ -11,7 +12,23 @@ export const Message = ({ message, editable=false, userSpecific=false }) => {
     const [editing, setEditing] = useState(false)
     const [deleting, setDeleting] = useState(false)
 
-    const {deleteMessage, isLoading, error, setError} = useDeleteMessage()
+    const [title, setTitle] = useState(message.title)
+    const [content, setContent] = useState(message.content)
+
+    const { deleteMessage, isLoading: deleteLoading, error: deleteError } = useDeleteMessage()
+    const { editMessage, isLoading: editLoading, error: editError } = useEditMessage()
+
+    const [error, setError] = useState(null)
+    const [isLoading, setLoading] = useState(false)
+
+    useEffect(() => setLoading(deleteLoading || editLoading), [deleteLoading, editLoading])
+    useEffect(() => {
+        let error = null
+        if (editing) error = editError
+        if (deleting) error = deleteError
+        setError(error)
+        console.log(error)
+    }, [deleteError, editError])
 
     const resetStates = () => {
         setError(null)
@@ -37,12 +54,15 @@ export const Message = ({ message, editable=false, userSpecific=false }) => {
 
     const confirmAction = () => {
         if (deleting) {
-            deleteMessage(message._id+"37")
+            deleteMessage(message._id)
         }
 
         if (editing) {
-            console.log("gonna edit")
+            console.log("Editing")
+            editMessage(message._id, {title, content})
         }
+
+        resetStates()
     }
 
     const options = (
@@ -71,9 +91,22 @@ export const Message = ({ message, editable=false, userSpecific=false }) => {
                 (error && <div className='error' onMouseLeave={() => {setError(null); cancelAction()}}>{error}</div>)}
             </div>
             <div className="m-2 p-3 flex flex-col gap-1 bg-neutral-600 rounded-md border-2 border-black">
-                <h4 className="text-xl capitalize">{message.title}</h4>
-                <p className="font-mono">{message.content}</p>
+                {!editing && (
+                    <>
+                        <h4 className="text-xl capitalize">{message.title}</h4>
+                        <p className="font-mono">{message.content}</p>
+                    </>
+                )}
+
+                {editing && (
+                    <>
+                        <input className='text-input text-black w-full' type="text" name="title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Title of Message'/>
+                        <textarea className=' w-full h-32 resize-none p-2 rounded-md border-4 border-black font-mono outline-none text-black' name="content"  onChange={(e) => setContent(e.target.value)} placeholder='Content goes here...' value={content}/>
+                    </>
+                )}
             </div>
+
+
             <p className="text-right text-neutral-300 italic font-mono sm:hidden">{formatDistanceToNow(new Date(message.createdAt), { addSuffix: true })}</p>
         </div>
     )
