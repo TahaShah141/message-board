@@ -22,6 +22,14 @@
     @apply border-b-2 border-white hover:border-red-500
 }
 
+.profile-link {
+    @apply h-12 w-12 p-1 text-neutral-300 hover:text-neutral-50 hover:scale-110 bg-black rounded-full bg-opacity-10
+}
+
+.profile-link.active {
+    @apply text-red-500 scale-110 border border-white
+}
+
 .text-input {
     @apply w-64 h-10 p-2 rounded-md border-4 border-black font-mono outline-none
 }
