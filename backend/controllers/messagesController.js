@@ -74,7 +74,7 @@ const updateMessage = async (req, res) => {
 
     const message = await Message.findByIdAndUpdate(messageID, {
         ...req.body
-    });
+    }, {new: true});
 
     if (!mongoose.isValidObjectId(messageID)) {
         return res.status(404).json({error: "No such message exists"});
