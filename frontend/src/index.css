@@ -11,7 +11,7 @@
 }
 
 .error {
-    @apply bg-red-500 border-4 border-red-800 rounded-md text-[0.75rem] w-full p-3 text-neutral-200 opacity-70 hover:opacity-100 font-mono uppercase
+    @apply bg-red-500 border-4 border-red-800 rounded-md text-[0.75rem] w-max p-3 text-neutral-200 opacity-70 hover:opacity-100 font-mono uppercase animate-popup
 }
 
 .nav-link {

@@ -30,13 +30,13 @@ const getAllMessages = async (req, res) => {
 
 //get a message by id
 const getMessage = async (req, res) => {
-    const { messageID } = req.params;
+    const { id: messageID } = req.params;
 
     if (!mongoose.isValidObjectId(messageID)) {
         return res.status(400).json({error: "Invalid ID"});
     }
 
-    const message = Message.findById(messageID);
+    const message = await Message.findById(messageID);
 
     if (!mongoose.isValidObjectId(messageID)) {
         return res.status(404).json({error: "No such message exists"});
@@ -48,13 +48,13 @@ const getMessage = async (req, res) => {
 
 //delete a message by id
 const deleteMessage = async (req, res) => {
-    const { messageID } = req.params;
+    const { id: messageID } = req.params;
 
     if (!mongoose.isValidObjectId(messageID)) {
         return res.status(400).json({error: "Invalid ID"});
     }
 
-    const message = Message.findByIdAndDelete(messageID);
+    const message = await Message.findByIdAndDelete(messageID);
 
     if (!mongoose.isValidObjectId(messageID)) {
         return res.status(404).json({error: "No such message exists"});
@@ -66,13 +66,13 @@ const deleteMessage = async (req, res) => {
 
 //update a message by id
 const updateMessage = async (req, res) => {
-    const { messageID } = req.params;
+    const { id: messageID } = req.params;
 
     if (!mongoose.isValidObjectId(messageID)) {
         return res.status(400).json({error: "Invalid ID"});
     }
 
-    const message = Message.findByIdAndUpdate(messageID, {
+    const message = await Message.findByIdAndUpdate(messageID, {
         ...req.body
     });
 
