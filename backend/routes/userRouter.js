@@ -13,6 +13,9 @@ const {
 //initializing the router
 const router = express.Router();
 
+//get the user's messages
+router.get('/messages', getUserMessages);
+
 //get a user by id
 router.get('/:id', getUser);
 

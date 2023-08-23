@@ -22,7 +22,8 @@ const getUser = async (req, res) => {
 }
 
 const getUserMessages = async (req, res) => {
-    const { id: userID  } = req.params
+    let { id: userID  } = req.params
+    if (!userID) userID = req.user._id
 
     if (!mongoose.isValidObjectId(userID)) {
         return res.status(400).json({error: "Invalid ID"})
